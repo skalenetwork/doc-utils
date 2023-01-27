@@ -5,13 +5,13 @@
 
 export default {
   collectCoverage: true,
-  coverageDirectory: "coverage",
+	coverageDirectory: "coverage",
   coverageProvider: "v8",
-  globals: {
-    "ts-jest": {
-      tsconfig: "tsconfig.base.json"
-    }
-  },
-  testEnvironment: "jsdom",
-  preset: "ts-jest"
+	globals: {
+		"ts-jest": {
+			tsconfig: "tsconfig.base.json",
+		},
+	},
+	testEnvironment: "jsdom",
+	preset: "ts-jest",
 };
