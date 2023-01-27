@@ -1,5 +1,5 @@
 {
-  "name": "@dirtroad/package-template",
+  "name": "@dirtroad/npm-package-template",
   "version": "0.1.0",
   "description": "NPM Package Template for Dirt Road Development Organization",
   "exports": {
@@ -40,9 +40,9 @@
   "author": "Sawyer Cutler",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/Dirt-Road-Development/package-template/issues"
+    "url": "https://github.com/Dirt-Road-Development/npm-package-template/issues"
   },
-  "homepage": "https://github.com/Dirt-Road-Development/package-template#readme",
+  "homepage": "https://github.com/Dirt-Road-Development/npm-package-template#readme",
   "devDependencies": {
     "@types/jest": "^29.4.0",
     "@types/node": "^18.11.18",
