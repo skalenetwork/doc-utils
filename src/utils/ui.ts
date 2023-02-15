@@ -15,9 +15,33 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
- * @file index.ts
+ * @file watch.ts
  * @author Sawyer Cutler
  * @copyright SKALE Labs 2019-Present
  */
 
-export * from "./utils";
+import proc, { StdioOptions } from "child_process";
+import path from "path";
+import { spawnProcess } from "./process";
+
+const CWD: "--cwd" = "--cwd";
+
+export type BuildUiParams = {
+    nodeRunner: "yarn" | "npm" | "pnpm";
+    folder: string;
+    directory: string;
+    args: string[];
+    stdio?: StdioOptions;
+}
+
+export const buildUI = (params: BuildUiParams[]) => {
+    params.forEach((p) => {
+        const { args, directory, nodeRunner, stdio } = p;
+        spawnProcess({
+            command: nodeRunner,
+            args,
+            stdio,
+            directory
+        })
+    })
+}

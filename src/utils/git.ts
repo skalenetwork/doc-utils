@@ -15,9 +15,45 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
- * @file index.ts
+ * @file git.ts
  * @author Sawyer Cutler
  * @copyright SKALE Labs 2019-Present
  */
 
-export * from "./utils";
+import proc, { StdioOptions } from "child_process";
+import path from "path";
+import { spawnProcess } from ".";
+
+export type CloneModuleParams = {
+    directory: string;
+    repository: string;
+    stdio?: StdioOptions;
+}
+
+export const cloneModule = (params: CloneModuleParams) => {
+
+    const { directory, repository, stdio } = params;
+
+    spawnProcess({
+        command: "git",
+        args: [
+            "submodule",
+            "add",
+            repository
+        ],
+        stdio,
+        directory
+    })
+}
+
+/** Original **/
+/**
+ * proc.spawnSync("git", [
+        "submodule",
+        "add",
+        repository /// Git Repository
+    ], {
+        stdio: stdio ?? "inherit",
+        cwd: path.dirname(directory)
+    });
+ */
