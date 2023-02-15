@@ -1,7 +1,7 @@
 {
-  "name": "@dirtroad/npm-package-template",
+  "name": "@skalenetwork/doc-utils",
   "version": "0.1.0",
-  "description": "NPM Package Template for Dirt Road Development Organization",
+  "description": "SKALE Network Utilies for Multi-Repo Documentation",
   "exports": {
     ".": {
       "import": {
@@ -33,7 +33,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dirt-Road-Development/package-template.git"
+    "url": "git+https://github.com/skalenetwork/doc-utils.git"
   },
   "keywords": [
     "NPM",
@@ -41,11 +41,11 @@
     "Template"
   ],
   "author": "Sawyer Cutler",
-  "license": "GPL-3.0-or-later",
+  "license": "LGPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/Dirt-Road-Development/npm-package-template/issues"
+    "url": "https://github.com/skalenetwork/doc-utils/issues"
   },
-  "homepage": "https://github.com/Dirt-Road-Development/npm-package-template#readme",
+  "homepage": "https://github.com/skalenetwork/doc-utils#readme",
   "devDependencies": {
     "@types/jest": "^29.4.0",
     "@types/node": "^18.11.18",
