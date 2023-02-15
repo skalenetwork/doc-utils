@@ -22,14 +22,14 @@
 
 import liveServer from "live-server";
 
-type Params = {
+export type ServerParams = {
     buildDir: string;
     open?: boolean;
     port?: number;
     wait?: number;
 }
 
-export const start = ({ port, open, buildDir, wait }: Params) : void => {
+export const start = ({ port, open, buildDir, wait }: ServerParams) : void => {
     liveServer.start({
         port: port ?? 4444, 
         open: open ??  true,
