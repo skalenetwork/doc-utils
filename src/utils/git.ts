@@ -20,30 +20,13 @@
  * @copyright SKALE Labs 2019-Present
  */
 
-import proc, { StdioOptions } from "child_process";
-import path from "path";
-import { spawnProcess } from ".";
+import { ProcessParams, spawnProcess } from "./process";
 
-export type CloneModuleParams = {
-    directory: string;
-    repository: string;
-    stdio?: StdioOptions;
-}
+export const addGitSubmodule = (params: ProcessParams) => {
 
-export const cloneModule = (params: CloneModuleParams) => {
+    const { command, directory, args, stdio } = params;
 
-    const { directory, repository, stdio } = params;
-
-    spawnProcess({
-        command: "git",
-        args: [
-            "submodule",
-            "add",
-            repository
-        ],
-        stdio,
-        directory
-    })
+    
 }
 
 /** Original **/

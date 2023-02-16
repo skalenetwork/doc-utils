@@ -15,16 +15,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  * 
- * @file watch.ts
+ * @file ui.ts
  * @author Sawyer Cutler
  * @copyright SKALE Labs 2019-Present
  */
 
-import proc, { StdioOptions } from "child_process";
-import path from "path";
+import { StdioOptions } from "child_process";
 import { spawnProcess } from "./process";
-
-const CWD: "--cwd" = "--cwd";
 
 export type BuildUiParams = {
     nodeRunner: "yarn" | "npm" | "pnpm";

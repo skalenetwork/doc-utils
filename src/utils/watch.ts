@@ -24,15 +24,15 @@ import chalk from "chalk";
 import chokidar from "chokidar";
 import { Stats } from "fs";
 
-export type WatchEvent =   "add"       |
-                "addDir"    |
-                "all"       |
-                "change"    |
-                "error"     |
-                "raw"       |
-                "ready"     |
-                "unlink"    |
-                "unlinkDir" ;
+export type WatchEvent =    "add"       |
+                            "addDir"    |
+                            "all"       |
+                            "change"    |
+                            "error"     |
+                            "raw"       |
+                            "ready"     |
+                            "unlink"    |
+                            "unlinkDir" ;
 
 
 export type WatchParams = {
