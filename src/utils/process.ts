@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- * 
+ *
  * @file process.ts
  * @author Sawyer Cutler
  * @copyright SKALE Labs 2019-Present
@@ -24,19 +24,17 @@ import proc, { StdioOptions } from "child_process";
 import path from "path";
 
 export type ProcessParams = {
-    args: string[];
-    command: string;
-    directory: string;
-    stdio?: StdioOptions;
-    
-}
+  args: string[];
+  command: string;
+  directory: string;
+  stdio?: StdioOptions;
+};
 
 export const spawnProcess = (params: ProcessParams) => {
+  const { args, command, directory, stdio } = params;
 
-    const { args, command, directory, stdio } = params;
-
-    proc.spawnSync(command, args, {
-        stdio: stdio ?? "inherit",
-        cwd: path.dirname(directory)
-    });
-}
+  proc.spawnSync(command, args, {
+    stdio: stdio ?? "inherit",
+    cwd: path.dirname(directory),
+  });
+};

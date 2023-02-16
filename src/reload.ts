@@ -31,96 +31,66 @@ import { watch } from "./utils/watch";
  */
 
 async function main() {
-    const flags: Flags = sortFlags(process.argv);
+  const flags: Flags = sortFlags(process.argv);
 
-    const directory = path.dirname(flags.path);
-    /// Load Docs UI Wrapper
+  const directory = path.dirname(flags.path);
+  /// Load Docs UI Wrapper
+  spawnProcess({
+    command: "git",
+    args: ["submodule", "add", flags.uiRepo],
+    directory,
+  });
+
+  /// Build Docs
+  spawnProcess({
+    command: "npx",
+    args: flags.docsTrace
+      ? ["antora", "--fetch", flags.docsPlaybook, "--stacktrace"]
+      : ["antora", "--fetch", flags.docsPlaybook],
+    directory,
+  });
+
+  if (flags.uiOnly) {
+    /// Build UI
     spawnProcess({
-        command: "git",
-        args: [
-            "submodule",
-            "add",
-            flags.uiRepo
-            ],
-        directory
+      command: flags.nodeRunner,
+      args: ["--cwd", flags.uiPath, "install"],
+      directory,
     });
 
-    /// Build Docs
+    /// Build UI
     spawnProcess({
-        command: "npx",
-        args: flags.docsTrace ? [
-            "antora",
-            "--fetch",
-            flags.docsPlaybook,
-            "--stacktrace"
-        ] : [
-            "antora",
-            "--fetch",
-            flags.docsPlaybook,
-        ],
-        directory
+      command: flags.nodeRunner,
+      args: ["--cwd", flags.uiPath, "bundle"],
+      directory,
     });
+  } else {
+    spawnProcess({
+      command: flags.nodeRunner,
+      args: ["--cwd", flags.uiPath, "build:ui"],
+      directory,
+    });
+  }
 
-    if (flags.uiOnly) {
-        /// Build UI
+  watch({
+    paths: flags.watchPaths,
+    event: flags.watchEvent,
+    functions: [
+      () =>
         spawnProcess({
-            command: flags.nodeRunner,
-            args: [
-                "--cwd",
-                flags.uiPath,
-                "install"
-            ],
-            directory
-        });
-
-        /// Build UI
-        spawnProcess({
-            command: flags.nodeRunner,
-            args: [
-                "--cwd",
-                flags.uiPath,
-                "bundle"
-            ],
-            directory
-        });
-    } else {
-        spawnProcess({
-            command: flags.nodeRunner,
-            args: [
-                "--cwd",
-                flags.uiPath,
-                "build:ui"
-            ],
-            directory
-        });
-    }
-
-    watch({
-        paths: flags.watchPaths,
-        event: flags.watchEvent,
-        functions: [
-            () => spawnProcess({
-                command: "npx",
-                args: flags.docsTrace ? [
-                    "antora",
-                    "--fetch",
-                    flags.docsPlaybook,
-                    "--stacktrace"
-                ] : [
-                    "antora",
-                    "--fetch",
-                    flags.docsPlaybook,
-                ],
-                directory
-            })
-        ],
-        logPath: flags.watchLogPath,
-        logStats: flags.watchLogStats
-    })
+          command: "npx",
+          args: flags.docsTrace
+            ? ["antora", "--fetch", flags.docsPlaybook, "--stacktrace"]
+            : ["antora", "--fetch", flags.docsPlaybook],
+          directory,
+        }),
+    ],
+    logPath: flags.watchLogPath,
+    logStats: flags.watchLogStats,
+  });
 }
 
-main()
-    .catch((error) => {
-        console.error(chalk.redBright(error));
-        process.exitCode = 1;
-    })
+main().catch((error) => {
+  console.error(chalk.redBright(error));
+  process.exitCode = 1;
+});

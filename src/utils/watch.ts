@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- * 
+ *
  * @file watch.ts
  * @author Sawyer Cutler
  * @copyright SKALE Labs 2019-Present
@@ -24,34 +24,35 @@ import chalk from "chalk";
 import chokidar from "chokidar";
 import { Stats } from "fs";
 
-export type WatchEvent =    "add"       |
-                            "addDir"    |
-                            "all"       |
-                            "change"    |
-                            "error"     |
-                            "raw"       |
-                            "ready"     |
-                            "unlink"    |
-                            "unlinkDir" ;
-
+export type WatchEvent =
+  | "add"
+  | "addDir"
+  | "all"
+  | "change"
+  | "error"
+  | "raw"
+  | "ready"
+  | "unlink"
+  | "unlinkDir";
 
 export type WatchParams = {
-    paths: string | string[];
-    event: WatchEvent;
-    functions: Function[];
-    logPath?: boolean;
-    logStats?: boolean;
-}
+  paths: string | string[];
+  event: WatchEvent;
+  functions: (() => void)[];
+  logPath?: boolean;
+  logStats?: boolean;
+};
 
-export const watch = (params: WatchParams) : void => {
+export const watch = (params: WatchParams): void => {
+  const { paths, event, functions, logPath, logStats } = params;
 
-    const { paths, event, functions, logPath, logStats } = params;
-
-    chokidar.watch(paths).on(String(event), (path: string, stats?: Stats | undefined) => {
-        if (logPath) console.log("Path: ", chalk.blue(path));
-        if (logStats && stats) console.log("Stats: ", chalk.blue(stats));
-        for (const fn of functions) {
-            () => fn();
-        }
+  chokidar
+    .watch(paths)
+    .on(String(event), (path: string, stats?: Stats | undefined) => {
+      if (logPath) console.log("Path: ", chalk.blue(path));
+      if (logStats && stats) console.log("Stats: ", chalk.blue(stats));
+      for (const fn of functions) {
+        () => fn();
+      }
     });
-}
+};

@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- * 
+ *
  * @file server.ts
  * @author Sawyer Cutler
  * @copyright SKALE Labs 2019-Present
@@ -23,21 +23,21 @@
 import liveServer from "live-server";
 
 export type ServerParams = {
-    buildDir: string;
-    open?: boolean;
-    port?: number;
-    wait?: number;
-}
+  buildDir: string;
+  open?: boolean;
+  port?: number;
+  wait?: number;
+};
 
-export const start = ({ port, open, buildDir, wait }: ServerParams) : void => {
-    liveServer.start({
-        port: port ?? 4444, 
-        open: open ??  true,
-        root: buildDir,
-        wait: wait ?? 1000
-    });
-} 
+export const start = ({ port, open, buildDir, wait }: ServerParams): void => {
+  liveServer.start({
+    port: port ?? 4444,
+    open: open ?? true,
+    root: buildDir,
+    wait: wait ?? 1000,
+  });
+};
 
-export const stop = () : void => {
-    liveServer.shutdown();
-}
+export const stop = (): void => {
+  liveServer.shutdown();
+};
