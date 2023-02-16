@@ -2,6 +2,9 @@
   "name": "@skalenetwork/doc-utils",
   "version": "0.1.0",
   "description": "SKALE Network Utilies for Multi-Repo Documentation",
+  "bin": {
+    "skl-reload": "./lib/cjs/reload.js"
+  },
   "exports": {
     ".": {
       "import": {
