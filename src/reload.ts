@@ -20,11 +20,10 @@
     @author Sawyer Cutler
 */
 
+import chalk from "chalk";
 import path from "path";
 import { Flags, sortFlags } from "./utils/flags";
-import { addGitSubmodule } from "./utils/git";
 import { spawnProcess } from "./utils/process";
-import { buildUI } from "./utils/ui";
 import { watch } from "./utils/watch";
 
 /**
@@ -119,3 +118,9 @@ async function main() {
         logStats: flags.watchLogStats
     })
 }
+
+main()
+    .catch((error) => {
+        console.error(chalk.redBright(error));
+        process.exitCode = 1;
+    })
