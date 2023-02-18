@@ -29,7 +29,7 @@ export type ServerParams = {
   wait?: number;
 };
 
-export const start = ({ port, open, buildDir, wait }: ServerParams): void => {
+export const startServer =({ port, open, buildDir, wait }: ServerParams): void => {
   liveServer.start({
     port: port ?? 4444,
     open: open ?? true,

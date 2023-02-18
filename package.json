@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "SKALE Network Utilies for Multi-Repo Documentation",
   "bin": {
-    "skl-reload": "./lib/cjs/reload.js"
+    "reload": "./lib/cjs/reload.js"
   },
   "exports": {
     ".": {
@@ -24,7 +24,7 @@
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc -p ./tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
     "build:cjs": "tsc -p ./tsconfig.cjs.json",
-    "dev": "nodemon --watch \"./src/**/*.*\" --exect npm run build",
+    "dev": "nodemon --watch \"./src/**/*.*\" --exec npm run build",
     "prepack": "npm run build",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -50,12 +50,12 @@
   },
   "homepage": "https://github.com/skalenetwork/doc-utils#readme",
   "devDependencies": {
-    "@djencks/asciidoctor-mathjax": "^0.0.8",
     "@types/jest": "^29.4.0",
     "@types/live-server": "^1.2.1",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
+    "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
@@ -83,6 +83,7 @@
     "access": "public"
   },
   "dependencies": {
-    "chalk": "^4.1.2"
+    "@djencks/asciidoctor-mathjax": "^0.0.8",
+    "asciidoctor-kroki": "^0.15.4"
   }
 }

@@ -44,6 +44,12 @@ export type Flags = {
   watchEvent: WatchEvent;
   watchLogPath?: boolean;
   watchLogStats?: boolean;
+
+  /// Server Config
+  serverWait: number;
+  serverOpen: boolean;
+  serverDir: string;
+  serverPort: number;
 };
 
 const _handleValue = (
@@ -63,12 +69,12 @@ const _handleBoolean = (args: string[], value: string): boolean => {
 
 export const sortFlags = (args: string[]): Flags => {
   return {
-    nodeRunner: _handleValue(args, "--nodeRunner") ?? "npm",
+    nodeRunner: _handleValue(args, "--node-runner") ?? "npm",
     path: _handleValue(args, "--path", true),
     uiRepo:
       _handleValue(args, "--ui-repo") ??
-      "https://github.com/skalenetwork/doc-ui",
-    uiPath: _handleValue(args, "--ui-folder") ?? "doc-ui",
+      "git@github.com:skalenetwork/doc-ui.git",
+    uiPath: _handleValue(args, "--ui-path") ?? "doc-ui",
     uiOnly: _handleBoolean(args, "--ui-only"),
     docsPlaybook: _handleValue(args, "--docs-playbook") ?? "playbook.yml",
     docsTrace: _handleBoolean(args, "--docs-stacktrace"),
@@ -76,5 +82,9 @@ export const sortFlags = (args: string[]): Flags => {
     watchEvent: _handleValue(args, "--watch-event", true),
     watchLogPath: _handleBoolean(args, "--watch-log-path"),
     watchLogStats: _handleBoolean(args, "--watch-log-stats"),
+    serverWait: Number(_handleValue(args, "--server-wait") ?? "1000"),
+    serverOpen: _handleBoolean(args, "--server-open"),
+    serverDir: _handleValue(args, "--server-dir", true),
+    serverPort: Number(_handleValue(args, "--server-port") ?? "4444")
   } as Flags;
 };

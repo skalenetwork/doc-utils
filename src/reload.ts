@@ -24,6 +24,7 @@ import chalk from "chalk";
 import path from "path";
 import { Flags, sortFlags } from "./utils/flags";
 import { spawnProcess } from "./utils/process";
+import { startServer } from "./utils/server";
 import { watch } from "./utils/watch";
 
 /**
@@ -35,59 +36,79 @@ async function main() {
 
   const directory = path.dirname(flags.path);
   /// Load Docs UI Wrapper
+
+  spawnProcess({
+    command: "git",
+    args: ["submodule", "deinit", "-f", "--", flags.uiPath],
+    directory
+  });
+
+  spawnProcess({
+    command: "git",
+    args: ["rm", "-f", flags.uiPath],
+    directory
+  });
+
   spawnProcess({
     command: "git",
     args: ["submodule", "add", flags.uiRepo],
-    directory,
+    directory
   });
 
-  /// Build Docs
-  spawnProcess({
-    command: "npx",
-    args: flags.docsTrace
-      ? ["antora", "--fetch", flags.docsPlaybook, "--stacktrace"]
-      : ["antora", "--fetch", flags.docsPlaybook],
-    directory,
-  });
+  // /// Build Docs
+  // spawnProcess({
+  //   command: "npx",
+  //   args: flags.docsTrace
+  //     ? ["antora", "--fetch", flags.docsPlaybook, "--stacktrace"]
+  //     : ["antora", "--fetch", flags.docsPlaybook],
+  //   directory,
+  // });
 
-  if (flags.uiOnly) {
-    /// Build UI
-    spawnProcess({
-      command: flags.nodeRunner,
-      args: ["--cwd", flags.uiPath, "install"],
-      directory,
-    });
+  // if (flags.uiOnly) {
+  //   /// Build UI
+  //   spawnProcess({
+  //     command: flags.nodeRunner,
+  //     args: ["--cwd", flags.uiPath, "install"],
+  //     directory,
+  //   });
 
-    /// Build UI
-    spawnProcess({
-      command: flags.nodeRunner,
-      args: ["--cwd", flags.uiPath, "bundle"],
-      directory,
-    });
-  } else {
-    spawnProcess({
-      command: flags.nodeRunner,
-      args: ["--cwd", flags.uiPath, "build:ui"],
-      directory,
-    });
-  }
+  //   /// Build UI
+  //   spawnProcess({
+  //     command: flags.nodeRunner,
+  //     args: ["--cwd", flags.uiPath, "bundle"],
+  //     directory,
+  //   });
+  // } else {
+  //   spawnProcess({
+  //     command: flags.nodeRunner,
+  //     args: ["--cwd", flags.uiPath, "build:ui"],
+  //     directory,
+  //   });
+  // }
 
-  watch({
-    paths: flags.watchPaths,
-    event: flags.watchEvent,
-    functions: [
-      () =>
-        spawnProcess({
-          command: "npx",
-          args: flags.docsTrace
-            ? ["antora", "--fetch", flags.docsPlaybook, "--stacktrace"]
-            : ["antora", "--fetch", flags.docsPlaybook],
-          directory,
-        }),
-    ],
-    logPath: flags.watchLogPath,
-    logStats: flags.watchLogStats,
-  });
+  // startServer({
+  //   port: flags.serverPort,
+  //   open: flags.serverOpen,
+  //   buildDir: flags.serverDir,
+  //   wait: flags.serverWait
+  // })
+
+  // watch({
+  //   paths: flags.watchPaths,
+  //   event: flags.watchEvent,
+  //   functions: [
+  //     () =>
+  //       spawnProcess({
+  //         command: "npx",
+  //         args: flags.docsTrace
+  //           ? ["antora", "--fetch", flags.docsPlaybook, "--stacktrace"]
+  //           : ["antora", "--fetch", flags.docsPlaybook],
+  //         directory,
+  //       }),
+  //   ],
+  //   logPath: flags.watchLogPath,
+  //   logStats: flags.watchLogStats,
+  // });
 }
 
 main().catch((error) => {
