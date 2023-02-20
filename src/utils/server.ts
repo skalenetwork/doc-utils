@@ -35,6 +35,7 @@ export const startServer =({ port, open, buildDir, wait }: ServerParams): void =
     open: open ?? true,
     root: buildDir,
     wait: wait ?? 1000,
+    logLevel: 2
   });
 };
 
