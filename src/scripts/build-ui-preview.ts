@@ -24,66 +24,52 @@ import chalk from "chalk";
 import path from "path";
 import { Flags, sortFlags } from "../utils/flags";
 import { spawnProcess } from "../utils/process";
-import { startServer } from "../utils/server";
-import { watch } from "../utils/watch";
 
 /**
  * @description Called via npx reload-ui
  */
 
 async function main() {
-  const flags: Flags = sortFlags(process.argv);
+  const flags: Flags = sortFlags(process.argv, false);
 
   const directory = path.dirname(flags.path);
 
-  /// Load Docs UI Wrapper
+  /// Remove UI from Git
   spawnProcess({
     command: "git",
     args: ["submodule", "deinit", "-f", "--", flags.uiPath],
     directory,
   });
 
+  /// Remove UI from Git
   spawnProcess({
     command: "git",
     args: ["rm", "-f", flags.uiPath],
     directory,
   });
 
+  /// Add Submodule
   spawnProcess({
     command: "git",
     args: ["submodule", "add", flags.uiRepo],
     directory,
   });
 
-  if (flags.uiOnly) {
-    /// Build UI
-    spawnProcess({
-      command: flags.nodeRunner,
-      args: ["--cwd", flags.uiPath, "install"],
-      directory,
-    });
-
-    /// Build UI
-    spawnProcess({
-      command: flags.nodeRunner,
-      args: ["--cwd", flags.uiPath, "bundle"],
-      directory,
-    });
-  } else {
-    spawnProcess({
-      command: flags.nodeRunner,
-      args: ["--cwd", flags.uiPath, "build:ui"],
-      directory,
-    });
-  }
-
-  startServer({
-    port: flags.serverPort,
-    open: flags.serverOpen,
-    buildDir: flags.serverDir,
-    wait: flags.serverWait,
+  /// Install UI Deps
+  spawnProcess({
+    command: flags.nodeRunner,
+    args: ["--cwd", flags.uiPath, "install"],
+    directory,
   });
 
+  /// Build UI
+  spawnProcess({
+    command: flags.nodeRunner,
+    args: ["--cwd", flags.uiPath, "bundle"],
+    directory,
+  });
+
+  /// Build Docs
   spawnProcess({
     command: "npm",
     args: flags.docsTrace
@@ -91,32 +77,6 @@ async function main() {
       : ["exec", "--", "antora", "--fetch", flags.docsPlaybook],
     stdio: "inherit",
     directory,
-  });
-
-  const fn = (): void => {
-    spawnProcess({
-      command: "npm",
-      args: flags.docsTrace
-        ? [
-            "exec",
-            "--",
-            "antora",
-            "--fetch",
-            flags.docsPlaybook,
-            "--stacktrace",
-          ]
-        : ["exec", "--", "antora", "--fetch", flags.docsPlaybook],
-      stdio: "inherit",
-      directory,
-    });
-  };
-
-  watch({
-    paths: flags.watchPaths,
-    event: flags.watchEvent,
-    functions: [fn],
-    logPath: flags.watchLogPath,
-    logStats: flags.watchLogStats,
   });
 }
 

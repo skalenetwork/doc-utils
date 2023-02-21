@@ -67,7 +67,7 @@ const _handleBoolean = (args: string[], value: string): boolean => {
   return args.indexOf(value) > -1;
 };
 
-export const sortFlags = (args: string[]): Flags => {
+export const sortFlags = (args: string[], watch: boolean = true): Flags => {
   return {
     nodeRunner: _handleValue(args, "--node-runner") ?? "npm",
     path: _handleValue(args, "--path", true),
@@ -78,8 +78,8 @@ export const sortFlags = (args: string[]): Flags => {
     uiOnly: _handleBoolean(args, "--ui-only"),
     docsPlaybook: _handleValue(args, "--docs-playbook") ?? "playbook.yml",
     docsTrace: _handleBoolean(args, "--docs-stacktrace"),
-    watchPaths: _handleValue(args, "--watch-paths", true)?.split(","),
-    watchEvent: _handleValue(args, "--watch-event", true),
+    watchPaths: _handleValue(args, "--watch-paths", watch ? true : false)?.split(","),
+    watchEvent: _handleValue(args, "--watch-event", watch ? true : false),
     watchLogPath: _handleBoolean(args, "--watch-log-path"),
     watchLogStats: _handleBoolean(args, "--watch-log-stats"),
     serverWait: Number(_handleValue(args, "--server-wait") ?? "1000"),
