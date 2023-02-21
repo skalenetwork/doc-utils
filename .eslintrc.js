@@ -31,5 +31,6 @@ module.exports = {
 			"error",
 			"always"
 		]
-	}
+	},
+	"ignorePatterns": ["src/tabs-block.js"],
 };
