@@ -28,7 +28,7 @@
  */
  const IdSeparatorChar = '-'
  const InvalidIdCharsRx = /[^a-zA-Z0-9_]/g
- const List = Opal.const_get_local(Opal.module(null, 'Asciidoctor'), 'List')
+ const List = Opal.const_get_local(Opal.module(null, 'Asciidoctor'), 'List');
  const ListItem = Opal.const_get_local(Opal.module(null, 'Asciidoctor'), 'ListItem')
 
  const generateId = (str, idx) => `tabset${idx}_${str.toLowerCase().replace(InvalidIdCharsRx, IdSeparatorChar)}`

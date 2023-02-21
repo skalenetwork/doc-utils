@@ -21,7 +21,7 @@
   "main": "./lib/cjs/index.js",
   "scripts": {
     "clean": "rm -rf ./lib",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build": "npm run clean && npm run build:cjs",
     "build:esm": "tsc -p ./tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
     "build:cjs": "tsc -p ./tsconfig.cjs.json",
     "dev": "nodemon --watch \"./src/**/*.*\" --exec npm run build",
@@ -55,7 +55,6 @@
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
-    "chalk": "^4.1.2",
     "chokidar": "^3.5.3",
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
@@ -83,7 +82,10 @@
     "access": "public"
   },
   "dependencies": {
+    "@antora/cli": "^3.1.2",
+    "@antora/site-generator-default": "^3.1.2",
     "@djencks/asciidoctor-mathjax": "^0.0.8",
-    "asciidoctor-kroki": "^0.15.4"
+    "asciidoctor-kroki": "^0.15.4",
+    "chalk": "^4.1.2"
   }
 }

@@ -85,6 +85,6 @@ export const sortFlags = (args: string[]): Flags => {
     serverWait: Number(_handleValue(args, "--server-wait") ?? "1000"),
     serverOpen: _handleBoolean(args, "--server-open"),
     serverDir: _handleValue(args, "--server-dir", true),
-    serverPort: Number(_handleValue(args, "--server-port") ?? "4444")
+    serverPort: Number(_handleValue(args, "--server-port") ?? "4444"),
   } as Flags;
 };

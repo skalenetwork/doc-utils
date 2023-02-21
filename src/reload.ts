@@ -25,10 +25,8 @@ import path from "path";
 import { Flags, sortFlags } from "./utils/flags";
 import { spawnProcess } from "./utils/process";
 import { startServer } from "./utils/server";
-// import { watch } from "./utils/watch";
 import proc from "child_process";
 import chokidar from "chokidar";
-import { cwd } from "process";
 
 /**
  * @description Called via npx reload-ui
@@ -38,24 +36,25 @@ async function main() {
   const flags: Flags = sortFlags(process.argv);
 
   const directory = path.dirname(flags.path);
+  const nestedDirectory = path.dirname("../" + flags.path);
 
   /// Load Docs UI Wrapper
   spawnProcess({
     command: "git",
     args: ["submodule", "deinit", "-f", "--", flags.uiPath],
-    directory
+    directory,
   });
 
   spawnProcess({
     command: "git",
     args: ["rm", "-f", flags.uiPath],
-    directory
+    directory,
   });
 
   spawnProcess({
     command: "git",
     args: ["submodule", "add", flags.uiRepo],
-    directory
+    directory,
   });
 
   if (flags.uiOnly) {
@@ -84,15 +83,19 @@ async function main() {
     port: flags.serverPort,
     open: flags.serverOpen,
     buildDir: flags.serverDir,
-    wait: flags.serverWait
-  })
-
-  console.log("HELLO WROLD");
-
-  proc.spawnSync("npx", ["antora", "--fetch", "playbook.yml", "--stacktrace"], {
-    stdio: "inherit",
-    cwd: path.dirname(flags.path)
+    wait: flags.serverWait,
   });
+
+  // console.log("HELLO WROLD");
+
+  proc.spawnSync(
+    "npx",
+    ["antora", "--fetch", "local-playbook-ui.yml", "--stacktrace"],
+    {
+      stdio: "inherit",
+      cwd: directory
+    }
+  );
 
   // spawnProcess({
   //   command: "npm",
@@ -102,14 +105,18 @@ async function main() {
   //   stdio: "inherit",
   //   directory
   // });
-  
-  chokidar.watch(["docs/**/*.yml", "docs/**/*.adoc"]).on("change", () => {
-    console.log("CHANGE DETECTED");
-    proc.spawnSync("ls", { cwd: path.dirname(flags.path) });
-    proc.spawnSync("npx", ["antora", "--fetch", "local-playbook-ui.yml", "--stacktrace"], {
-      stdio: "inherit",
-      cwd: path.dirname(flags.path)
-    });
+
+  // chokidar.watch(["docs/**/*.yml", "docs/**/*.adoc"]).on("change", () => {
+    // console.log("CHANGE DETECTED");
+    // proc.spawnSync("ls", { cwd: path.dirname(flags.path) });
+    // proc.spawnSync(
+    //   "npx",
+    //   ["antora", "--fetch", "local-playbook-ui.yml", "--stacktrace"],
+    //   {
+    //     stdio: "inherit",
+    //     cwd: nestedDirectory
+    //   }
+    // );
     // spawnProcess({
     //   command: "npm",
     //   args: flags.docsTrace
@@ -122,7 +129,7 @@ async function main() {
     // prepareDocs(path);
     // buildUI(path);
     // preview(path);
-  });
+  // });
   // watch({
   //   paths: flags.watchPaths,
   //   event: flags.watchEvent,

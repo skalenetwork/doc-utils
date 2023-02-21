@@ -4,11 +4,11 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "checkJs": true,
+    "checkJs": false,
     "allowJs": true,
     "declaration": true,
     "declarationMap": true,
     "allowSyntheticDefaultImports": true
-  },
-  "files": ["src/index.ts", "src/reload.ts"]
+  }
+  
 }

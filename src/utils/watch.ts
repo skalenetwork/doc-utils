@@ -47,13 +47,11 @@ export const watch = (params: WatchParams): void => {
   console.log("Params: ", params);
   const { paths, event, functions, logPath, logStats } = params;
 
-  chokidar
-    .watch(paths)
-    .on("all", (path: string, stats?: Stats | undefined) => {
-      if (logPath) console.log("Path: ", chalk.blue(path));
-      if (logStats && stats) console.log("Stats: ", chalk.blue(stats));
-      for (const fn of functions) {
-        () => fn();
-      }
-    });
+  chokidar.watch(paths).on("all", (path: string, stats?: Stats | undefined) => {
+    if (logPath) console.log("Path: ", chalk.blue(path));
+    if (logStats && stats) console.log("Stats: ", chalk.blue(stats));
+    for (const fn of functions) {
+      () => fn();
+    }
+  });
 };
