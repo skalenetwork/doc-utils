@@ -9,6 +9,11 @@
     "declaration": true,
     "declarationMap": true,
     "allowSyntheticDefaultImports": true
-  }
+  },
+  "include": [
+    "src",
+    "LICENSE",
+    "README.md"
+  ]
   
 }
