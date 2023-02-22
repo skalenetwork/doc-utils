@@ -51,7 +51,7 @@ async function main() {
   /// Add Submodule
   spawnProcess({
     command: "git",
-    args: ["submodule", "add", flags.uiRepo],
+    args: ["submodule", "add", "-f", flags.uiRepo],
     directory,
   });
 
