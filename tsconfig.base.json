@@ -9,5 +9,12 @@
     "declaration": true,
     "declarationMap": true,
     "allowSyntheticDefaultImports": true
-  }
+  },
+  "include": [
+    "LICENSE",
+    "src",
+    "package.json",
+    "package-lock.json",
+    "README.md"
+  ]
 }
