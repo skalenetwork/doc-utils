@@ -4,3 +4,4 @@ node_modules
 
 lib/tests
 lib/jest.config.js
+.npmrc
