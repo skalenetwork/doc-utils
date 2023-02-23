@@ -33,28 +33,7 @@ async function main() {
   const flags: Flags = sortFlags(process.argv, false);
 
   const directory = path.dirname(flags.path);
-
-  /// Remove UI from Git
-  spawnProcess({
-    command: "git",
-    args: ["submodule", "deinit", "-f", "--", flags.uiPath],
-    directory,
-  });
-
-  /// Remove UI from Git
-  spawnProcess({
-    command: "git",
-    args: ["rm", "-f", flags.uiPath],
-    directory,
-  });
-
-  /// Add Submodule
-  spawnProcess({
-    command: "git",
-    args: ["submodule", "add", "-f", flags.uiRepo],
-    directory,
-  });
-
+  
   /// Install UI Deps
   spawnProcess({
     command: flags.nodeRunner,
