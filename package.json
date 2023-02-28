@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "SKALE Network Utilies for Multi-Repo Documentation",
   "bin": {
-    "skl-build-ui-preview": "./lib/cjs/scripts/build-ui-preview.js",
     "skl-reload": "./lib/cjs/scripts/reload.js"
   },
   "exports": {
