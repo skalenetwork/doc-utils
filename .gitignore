@@ -2,8 +2,10 @@ node_modules
 .DS_Store
 .env
 
+lib
 lib/tests
 lib/jest.config.js
+
 .npmrc
 coverage
 coverage/
