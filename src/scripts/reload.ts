@@ -37,17 +37,17 @@ async function main() {
   const directory = path.dirname(flags.path);
 
   /// Load Docs UI Wrapper
-  spawnProcess({
-    command: "git",
-    args: ["submodule", "deinit", "-f", "--", flags.uiPath],
-    directory,
-  });
+  // spawnProcess({
+  //   command: "git",
+  //   args: ["submodule", "deinit", "-f", "--", flags.uiPath],
+  //   directory,
+  // });
 
-  spawnProcess({
-    command: "git",
-    args: ["rm", "-f", flags.uiPath],
-    directory,
-  });
+  // spawnProcess({
+  //   command: "git",
+  //   args: ["rm", "-f", flags.uiPath],
+  //   directory,
+  // });
 
   spawnProcess({
     command: "git",
