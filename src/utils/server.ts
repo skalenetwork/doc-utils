@@ -20,7 +20,7 @@
  * @copyright SKALE Labs 2019-Present
  */
 
-import liveServer from "live-server";
+import liveServer from "simple-live-server";
 
 export type ServerParams = {
   buildDir: string;
